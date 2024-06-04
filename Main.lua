@@ -146,6 +146,7 @@ Values:AddToggle({
 
 Values:AddToggle({
 	Name = "Toggle",
+    Keybind = 1,
 	Value = Aimbot.Settings.Toggle,
 	Callback = function(New, Old)
 		Aimbot.Settings.Toggle = New
@@ -169,16 +170,6 @@ Values:AddTextbox({ -- Using a Textbox instead of a Keybind because the UI Libra
 		Aimbot.Settings.TriggerKey = New
 	end
 }).Default = Aimbot.Settings.TriggerKey
-
---[[
-Values:AddKeybind({
-	Name = "Hotkey",
-	Value = Aimbot.Settings.TriggerKey,
-	Callback = function(New, Old)
-		Aimbot.Settings.TriggerKey = stringmatch(tostring(New), "Enum%.[UserInputType]*[KeyCode]*%.(.+)")
-	end,
-}).Default = Aimbot.Settings.TriggerKey
-]]
 
 Values:AddSlider({
 	Name = "Sensitivity",
@@ -221,6 +212,7 @@ Checks:AddToggle({
 
 ThirdPerson:AddToggle({
 	Name = "Enable Third Person",
+    Keybind = 1,
 	Value = Aimbot.Settings.ThirdPerson,
 	Callback = function(New, Old)
 		Aimbot.Settings.ThirdPerson = New
@@ -242,6 +234,7 @@ ThirdPerson:AddSlider({
 
 FOV_Values:AddToggle({
 	Name = "Enabled",
+    Keybind = 1,
 	Value = Aimbot.FOVSettings.Enabled,
 	Callback = function(New, Old)
 		Aimbot.FOVSettings.Enabled = New
@@ -353,6 +346,7 @@ WallHackChecks:AddToggle({
 
 ESPSettings:AddToggle({
 	Name = "Enabled",
+    Keybind = 1,
 	Value = WallHack.Visuals.ESPSettings.Enabled,
 	Callback = function(New, Old)
 		WallHack.Visuals.ESPSettings.Enabled = New
@@ -450,6 +444,7 @@ ESPSettings:AddDropdown({
 
 BoxesSettings:AddToggle({
 	Name = "Enabled",
+    Keybind = 1,
 	Value = WallHack.Visuals.BoxSettings.Enabled,
 	Callback = function(New, Old)
 		WallHack.Visuals.BoxSettings.Enabled = New
@@ -515,6 +510,7 @@ BoxesSettings:AddToggle({
 
 ChamsSettings:AddToggle({
 	Name = "Enabled",
+    Keybind = 1,
 	Value = WallHack.Visuals.ChamsSettings.Enabled,
 	Callback = function(New, Old)
 		WallHack.Visuals.ChamsSettings.Enabled = New
@@ -568,6 +564,7 @@ ChamsSettings:AddColorpicker({
 
 TracersSettings:AddToggle({
 	Name = "Enabled",
+    Keybind = 1,
 	Value = WallHack.Visuals.TracersSettings.Enabled,
 	Callback = function(New, Old)
 		WallHack.Visuals.TracersSettings.Enabled = New
@@ -615,6 +612,7 @@ TracersSettings:AddDropdown({
 
 HeadDotsSettings:AddToggle({
 	Name = "Enabled",
+    Keybind = 1,
 	Value = WallHack.Visuals.HeadDotSettings.Enabled,
 	Callback = function(New, Old)
 		WallHack.Visuals.HeadDotSettings.Enabled = New
@@ -670,6 +668,7 @@ HeadDotsSettings:AddColorpicker({
 
 HealthBarSettings:AddToggle({
 	Name = "Enabled",
+    Keybind = 1,
 	Value = WallHack.Visuals.HealthBarSettings.Enabled,
 	Callback = function(New, Old)
 		WallHack.Visuals.HealthBarSettings.Enabled = New
@@ -739,6 +738,7 @@ HealthBarSettings:AddColorpicker({
 
 CrosshairSettings:AddToggle({
 	Name = "Mouse Cursor",
+    Keybind = 1,
 	Value = UserInputService.MouseIconEnabled,
 	Callback = function(New, Old)
 		UserInputService.MouseIconEnabled = New
@@ -747,6 +747,7 @@ CrosshairSettings:AddToggle({
 
 CrosshairSettings:AddToggle({
 	Name = "Enabled",
+    Keybind = 1,
 	Value = WallHack.Crosshair.Settings.Enabled,
 	Callback = function(New, Old)
 		WallHack.Crosshair.Settings.Enabled = New
