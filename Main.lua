@@ -138,6 +138,7 @@ local FunctionsSection = FunctionsTab:CreateSection({
 
 Values:AddToggle({
 	Name = "Enabled",
+	Keybind = 1,
 	Value = Aimbot.Settings.Enabled,
 	Callback = function(New, Old)
 		Aimbot.Settings.Enabled = New
@@ -146,7 +147,6 @@ Values:AddToggle({
 
 Values:AddToggle({
 	Name = "Toggle",
-    Keybind = 1,
 	Value = Aimbot.Settings.Toggle,
 	Callback = function(New, Old)
 		Aimbot.Settings.Toggle = New
