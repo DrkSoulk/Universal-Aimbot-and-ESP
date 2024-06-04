@@ -13,8 +13,7 @@ local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local Workspace = game:GetService("Workspace")
-local Camera = Workspace.CurrentCamera
+local Camera = workspace.CurrentCamera
 
 --// Variables
 

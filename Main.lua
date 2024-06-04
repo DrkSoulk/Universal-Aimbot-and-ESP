@@ -1,92 +1,118 @@
---[[
-    Universal aimbot and ESP made by DrkSlk
-]]
-
 --// Cache
-local loadstring, getgenv, setclipboard, tablefind = loadstring, getgenv, setclipboard, table.find
 
---// Check if loaded
+local loadstring, getgenv, setclipboard, tablefind, UserInputService = loadstring, getgenv, setclipboard, table.find, game:GetService("UserInputService")
+
+--// Loaded check
 
 if DrkSlk then
     return
 end
 
---// Load Modules
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/DrkSoulk/Universal-Aimbot-and-ESP/main/Aimbot.lua"))()
---loadstring(game:HttpGet("https://raw.githubusercontent.com/DrkSoulk/Universal-Aimbot-and-ESP/main/WallHack.lua"))()
-
 --// Environment
 
 getgenv().DrkSlk = {}
 
---// Services
+--// Load Modules
 
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DrkSoulk/Universal-Aimbot-and-ESP/main/Aimbot.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DrkSoulk/Universal-Aimbot-and-ESP/main/WallHack.lua"))()
 
 --// Variables
 
+local Library = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)() -- Pepsi's UI Library
 local Aimbot, WallHack = getgenv().DrkSlk.Aimbot, getgenv().DrkSlk.WallHack
-local LocalPlayer = Players.LocalPlayer
 local Parts, Fonts, TracersType = {"Head", "HumanoidRootPart", "Torso", "Left Arm", "Right Arm", "Left Leg", "Right Leg", "LeftHand", "RightHand", "LeftLowerArm", "RightLowerArm", "LeftUpperArm", "RightUpperArm", "LeftFoot", "LeftLowerLeg", "UpperTorso", "LeftUpperLeg", "RightFoot", "RightLowerLeg", "LowerTorso", "RightUpperLeg"}, {"UI", "System", "Plex", "Monospace"}, {"Bottom", "Center", "Mouse"}
 
---// Library
+--// Frame
 
-local Library = loadstring(game:GetObjects("rbxassetid://7657867786")[1].Source)()
-local Window = Library:CreateWindow({
-    Name = "u/"..LocalPlayer.Name,
-    Themeable = {
-        Image = "7059346386",
-        Info = "Made by DrkSlk",
-        Credit = false
-    },
-    Background = "",
-    Theme = [[{"__Designer.Colors.topGradient":"3F0C64","__Designer.Colors.section":"C259FB","__Designer.Colors.hoveredOptionBottom":"4819B4","__Designer.Background.ImageAssetID":"rbxassetid://4427304036","__Designer.Colors.selectedOption":"4E149C","__Designer.Colors.unselectedOption":"482271","__Designer.Files.WorkspaceFile":"AirHub","__Designer.Colors.unhoveredOptionTop":"310269","__Designer.Colors.outerBorder":"391D57","__Designer.Background.ImageColor":"69009C","__Designer.Colors.tabText":"B9B9B9","__Designer.Colors.elementBorder":"160B24","__Designer.Background.ImageTransparency":100,"__Designer.Colors.background":"1E1237","__Designer.Colors.innerBorder":"531E79","__Designer.Colors.bottomGradient":"361A60","__Designer.Colors.sectionBackground":"21002C","__Designer.Colors.hoveredOptionTop":"6B10F9","__Designer.Colors.otherElementText":"7B44A8","__Designer.Colors.main":"AB26FF","__Designer.Colors.elementText":"9F7DB5","__Designer.Colors.unhoveredOptionBottom":"3E0088","__Designer.Background.UseBackgroundImage":false}]]
+Library.UnloadCallback = function()
+	Aimbot.Functions:Exit()
+	WallHack.Functions:Exit()
+	getgenv().DrkSlk = nil
+end
+
+local MainFrame = Library:CreateWindow({
+	Name = "u/"..game:GetService("Players").LocalPlayer.Name,
+	Themeable = {
+		Image = "7059346386",
+		Info = "Made by DrkSlk",
+		Credit = false
+	},
+	Background = "",
+	Theme = [[{"__Designer.Colors.topGradient":"3F0C64","__Designer.Colors.section":"C259FB","__Designer.Colors.hoveredOptionBottom":"4819B4","__Designer.Background.ImageAssetID":"rbxassetid://4427304036","__Designer.Colors.selectedOption":"4E149C","__Designer.Colors.unselectedOption":"482271","__Designer.Files.WorkspaceFile":"DrkSlk","__Designer.Colors.unhoveredOptionTop":"310269","__Designer.Colors.outerBorder":"391D57","__Designer.Background.ImageColor":"69009C","__Designer.Colors.tabText":"B9B9B9","__Designer.Colors.elementBorder":"160B24","__Designer.Background.ImageTransparency":100,"__Designer.Colors.background":"1E1237","__Designer.Colors.innerBorder":"531E79","__Designer.Colors.bottomGradient":"361A60","__Designer.Colors.sectionBackground":"21002C","__Designer.Colors.hoveredOptionTop":"6B10F9","__Designer.Colors.otherElementText":"7B44A8","__Designer.Colors.main":"AB26FF","__Designer.Colors.elementText":"9F7DB5","__Designer.Colors.unhoveredOptionBottom":"3E0088","__Designer.Background.UseBackgroundImage":false}]]
 })
 
 --// Tabs
 
-local AimbotTab = Window:CreateTab({Name = "Aimbot"})
-local VisualTab = Window:CreateTab({Name = "Aimbot"})
-local CrosshairTab = Window:CreateTab({Name = "Aimbot"})
+local AimbotTab = MainFrame:CreateTab({
+	Name = "Aimbot"
+})
 
---// Aimbot sections
-local Values = AimbotTab:CreateSection({Name = "Values"})
-local Checks = AimbotTab:CreateSection({Name = "Checks"})
-local ThirdPerson = AimbotTab:CreateSection({Name = "Third Person"})
-local FOV = AimbotTab:CreateSection({Name = "Field Of View", Side = "Right"})
-local Appearance = AimbotTab:CreateSection({Name = "FOV Appearance", Side = "Right"})
+local VisualsTab = MainFrame:CreateTab({
+	Name = "Visuals"
+})
 
---// Visuals Sections
+local CrosshairTab = MainFrame:CreateTab({
+	Name = "Crosshair"
+})
 
-local WallHackChecks = VisualTab:CreateSection({
+local FunctionsTab = MainFrame:CreateTab({
+	Name = "Functions"
+})
+
+--// Aimbot Sections
+
+local Values = AimbotTab:CreateSection({
+	Name = "Values"
+})
+
+local Checks = AimbotTab:CreateSection({
 	Name = "Checks"
 })
 
-local ESPSettings = VisualTab:CreateSection({
+local ThirdPerson = AimbotTab:CreateSection({
+	Name = "Third Person"
+})
+
+local FOV_Values = AimbotTab:CreateSection({
+	Name = "Field Of View",
+	Side = "Right"
+})
+
+local FOV_Appearance = AimbotTab:CreateSection({
+	Name = "FOV Circle Appearance",
+	Side = "Right"
+})
+
+--// Visuals Sections
+
+local WallHackChecks = VisualsTab:CreateSection({
+	Name = "Checks"
+})
+
+local ESPSettings = VisualsTab:CreateSection({
 	Name = "ESP Settings"
 })
 
-local BoxesSettings = VisualTab:CreateSection({
+local BoxesSettings = VisualsTab:CreateSection({
 	Name = "Boxes Settings"
 })
 
-local ChamsSettings = VisualTab:CreateSection({
+local ChamsSettings = VisualsTab:CreateSection({
 	Name = "Chams Settings"
 })
 
-local TracersSettings = VisualTab:CreateSection({
+local TracersSettings = VisualsTab:CreateSection({
 	Name = "Tracers Settings",
 	Side = "Right"
 })
 
-local HeadDotsSettings = VisualTab:CreateSection({
+local HeadDotsSettings = VisualsTab:CreateSection({
 	Name = "Head Dots Settings",
 	Side = "Right"
 })
 
-local HealthBarSettings = VisualTab:CreateSection({
+local HealthBarSettings = VisualsTab:CreateSection({
 	Name = "Health Bar Settings",
 	Side = "Right"
 })
@@ -102,6 +128,12 @@ local CrosshairSettings_CenterDot = CrosshairTab:CreateSection({
 	Side = "Right"
 })
 
+--// Functions Sections
+
+local FunctionsSection = FunctionsTab:CreateSection({
+	Name = "Functions"
+})
+
 --// Aimbot Values
 
 Values:AddToggle({
@@ -115,7 +147,6 @@ Values:AddToggle({
 Values:AddToggle({
 	Name = "Toggle",
 	Value = Aimbot.Settings.Toggle,
-    Keybind = 1,
 	Callback = function(New, Old)
 		Aimbot.Settings.Toggle = New
 	end
@@ -131,13 +162,23 @@ Aimbot.Settings.LockPart = Parts[1]; Values:AddDropdown({
 	Nothing = "Head"
 }).Default = Parts[1]
 
-Values:AddTextbox({
+Values:AddTextbox({ -- Using a Textbox instead of a Keybind because the UI Library doesn't support Mouse inputs like Left Click / Right Click...
 	Name = "Hotkey",
 	Value = Aimbot.Settings.TriggerKey,
 	Callback = function(New, Old)
 		Aimbot.Settings.TriggerKey = New
 	end
 }).Default = Aimbot.Settings.TriggerKey
+
+--[[
+Values:AddKeybind({
+	Name = "Hotkey",
+	Value = Aimbot.Settings.TriggerKey,
+	Callback = function(New, Old)
+		Aimbot.Settings.TriggerKey = stringmatch(tostring(New), "Enum%.[UserInputType]*[KeyCode]*%.(.+)")
+	end,
+}).Default = Aimbot.Settings.TriggerKey
+]]
 
 Values:AddSlider({
 	Name = "Sensitivity",
@@ -181,7 +222,6 @@ Checks:AddToggle({
 ThirdPerson:AddToggle({
 	Name = "Enable Third Person",
 	Value = Aimbot.Settings.ThirdPerson,
-    Keybind = 1,
 	Callback = function(New, Old)
 		Aimbot.Settings.ThirdPerson = New
 	end
@@ -200,7 +240,7 @@ ThirdPerson:AddSlider({
 
 --// FOV Settings Values
 
-FOV:AddToggle({
+FOV_Values:AddToggle({
 	Name = "Enabled",
 	Value = Aimbot.FOVSettings.Enabled,
 	Callback = function(New, Old)
@@ -208,16 +248,15 @@ FOV:AddToggle({
 	end
 }).Default = Aimbot.FOVSettings.Enabled
 
-FOV:AddToggle({
+FOV_Values:AddToggle({
 	Name = "Visible",
-    Keybind = 1,
 	Value = Aimbot.FOVSettings.Visible,
 	Callback = function(New, Old)
 		Aimbot.FOVSettings.Visible = New
 	end
 }).Default = Aimbot.FOVSettings.Visible
 
-FOV:AddSlider({
+FOV_Values:AddSlider({
 	Name = "Amount",
 	Value = Aimbot.FOVSettings.Amount,
 	Callback = function(New, Old)
@@ -229,7 +268,7 @@ FOV:AddSlider({
 
 --// FOV Settings Appearance
 
-Appearance:AddToggle({
+FOV_Appearance:AddToggle({
 	Name = "Filled",
 	Value = Aimbot.FOVSettings.Filled,
 	Callback = function(New, Old)
@@ -237,7 +276,7 @@ Appearance:AddToggle({
 	end
 }).Default = Aimbot.FOVSettings.Filled
 
-Appearance:AddSlider({
+FOV_Appearance:AddSlider({
 	Name = "Transparency",
 	Value = Aimbot.FOVSettings.Transparency,
 	Callback = function(New, Old)
@@ -248,7 +287,7 @@ Appearance:AddSlider({
 	Decimal = 1
 }).Default = Aimbot.FOVSettings.Transparency
 
-Appearance:AddSlider({
+FOV_Appearance:AddSlider({
 	Name = "Sides",
 	Value = Aimbot.FOVSettings.Sides,
 	Callback = function(New, Old)
@@ -258,7 +297,7 @@ Appearance:AddSlider({
 	Max = 60
 }).Default = Aimbot.FOVSettings.Sides
 
-Appearance:AddSlider({
+FOV_Appearance:AddSlider({
 	Name = "Thickness",
 	Value = Aimbot.FOVSettings.Thickness,
 	Callback = function(New, Old)
@@ -268,7 +307,7 @@ Appearance:AddSlider({
 	Max = 50
 }).Default = Aimbot.FOVSettings.Thickness
 
-Appearance:AddColorpicker({
+FOV_Appearance:AddColorpicker({
 	Name = "Color",
 	Value = Aimbot.FOVSettings.Color,
 	Callback = function(New, Old)
@@ -276,7 +315,7 @@ Appearance:AddColorpicker({
 	end
 }).Default = Aimbot.FOVSettings.Color
 
-Appearance:AddColorpicker({
+FOV_Appearance:AddColorpicker({
 	Name = "Locked Color",
 	Value = Aimbot.FOVSettings.LockedColor,
 	Callback = function(New, Old)
@@ -288,7 +327,6 @@ Appearance:AddColorpicker({
 
 WallHackChecks:AddToggle({
 	Name = "Enabled",
-    Keybind = 1,
 	Value = WallHack.Settings.Enabled,
 	Callback = function(New, Old)
 		WallHack.Settings.Enabled = New
@@ -315,7 +353,6 @@ WallHackChecks:AddToggle({
 
 ESPSettings:AddToggle({
 	Name = "Enabled",
-    Keybind = 1,
 	Value = WallHack.Visuals.ESPSettings.Enabled,
 	Callback = function(New, Old)
 		WallHack.Visuals.ESPSettings.Enabled = New
@@ -414,7 +451,6 @@ ESPSettings:AddDropdown({
 BoxesSettings:AddToggle({
 	Name = "Enabled",
 	Value = WallHack.Visuals.BoxSettings.Enabled,
-    Keybind = 1,
 	Callback = function(New, Old)
 		WallHack.Visuals.BoxSettings.Enabled = New
 	end
@@ -479,7 +515,6 @@ BoxesSettings:AddToggle({
 
 ChamsSettings:AddToggle({
 	Name = "Enabled",
-    Keybind = 1,
 	Value = WallHack.Visuals.ChamsSettings.Enabled,
 	Callback = function(New, Old)
 		WallHack.Visuals.ChamsSettings.Enabled = New
@@ -533,7 +568,6 @@ ChamsSettings:AddColorpicker({
 
 TracersSettings:AddToggle({
 	Name = "Enabled",
-    Keybind = 1,
 	Value = WallHack.Visuals.TracersSettings.Enabled,
 	Callback = function(New, Old)
 		WallHack.Visuals.TracersSettings.Enabled = New
@@ -581,7 +615,6 @@ TracersSettings:AddDropdown({
 
 HeadDotsSettings:AddToggle({
 	Name = "Enabled",
-    Keybind = 1,
 	Value = WallHack.Visuals.HeadDotSettings.Enabled,
 	Callback = function(New, Old)
 		WallHack.Visuals.HeadDotSettings.Enabled = New
@@ -638,7 +671,6 @@ HeadDotsSettings:AddColorpicker({
 HealthBarSettings:AddToggle({
 	Name = "Enabled",
 	Value = WallHack.Visuals.HealthBarSettings.Enabled,
-    Keybind = 1,
 	Callback = function(New, Old)
 		WallHack.Visuals.HealthBarSettings.Enabled = New
 	end
@@ -708,7 +740,6 @@ HealthBarSettings:AddColorpicker({
 CrosshairSettings:AddToggle({
 	Name = "Mouse Cursor",
 	Value = UserInputService.MouseIconEnabled,
-    Keybind = 1,
 	Callback = function(New, Old)
 		UserInputService.MouseIconEnabled = New
 	end
@@ -717,7 +748,6 @@ CrosshairSettings:AddToggle({
 CrosshairSettings:AddToggle({
 	Name = "Enabled",
 	Value = WallHack.Crosshair.Settings.Enabled,
-    Keybind = 1,
 	Callback = function(New, Old)
 		WallHack.Crosshair.Settings.Enabled = New
 	end
@@ -836,3 +866,27 @@ CrosshairSettings_CenterDot:AddToggle({
 		WallHack.Crosshair.Settings.CenterDotFilled = New
 	end
 }).Default = WallHack.Crosshair.Settings.CenterDotFilled
+
+--// Functions / Functions
+
+FunctionsSection:AddButton({
+	Name = "Reset Settings",
+	Callback = function()
+		Aimbot.Functions:ResetSettings()
+		WallHack.Functions:ResetSettings()
+		Library.ResetAll()
+	end
+})
+
+FunctionsSection:AddButton({
+	Name = "Restart",
+	Callback = function()
+		Aimbot.Functions:Restart()
+		WallHack.Functions:Restart()
+	end
+})
+
+FunctionsSection:AddButton({
+	Name = "Exit",
+	Callback = Library.Unload,
+})
