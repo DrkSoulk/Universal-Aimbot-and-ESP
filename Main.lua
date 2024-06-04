@@ -1,3 +1,7 @@
+--[[
+	Made by DrkSLk
+]]
+
 --// Cache
 
 local loadstring, getgenv, setclipboard, tablefind, UserInputService = loadstring, getgenv, setclipboard, table.find, game:GetService("UserInputService")
