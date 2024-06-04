@@ -1,3 +1,12 @@
+--// Cache
+
+local select, next, tostring, pcall, getgenv, setmetatable, mathfloor, mathabs, mathcos, mathsin, mathrad, wait = select, next, tostring, pcall, getgenv, setmetatable, math.floor, math.abs, math.cos, math.sin, math.rad, task.wait
+local WorldToViewportPoint, Vector2new, Vector3new, Vector3zero, CFramenew, Drawingnew, Color3fromRGB = nil, Vector2.new, Vector3.new, Vector3.zero, CFrame.new, Drawing.new, Color3.fromRGB
+
+--// Launching checks
+
+if not getgenv().DrkSlk or getgenv().DrkSlk.WallHack then return end
+
 --// Services
 
 local RunService = game:GetService("RunService")
